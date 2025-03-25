@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Notes</title>
+    <link rel="stylesheet" href="../styles/yournotes.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <a href="./index.html" class="back-button">← Back to Home</a>
+
+    <div class="main-container">
+      <div class="header">
+        <div class="title">Your Notes</div>
+        <span class="note-count" id="note-count">0 notes</span>
+      </div>
+
+      <div class="create-new" id="create-new">
+        <span>+</span> Create New Note
+      </div>
+
+      <ul class="notes-container" id="notes-list">
+        <!-- Notes will be dynamically added here -->
+      </ul>
+
+      <div class="app-footer">Write. Save. Remember.</div>
+    </div>
+
+    <script src="../js/yournotes.js"></script>
+    <script src="../js/background.js"></script>
+  </body>
+</html>

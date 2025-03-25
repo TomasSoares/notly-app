@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notly - Take Notes</title>
+    <link rel="stylesheet" href="../styles/newnote.css" />
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <a href="./yournotes.html">
+      <button class="back-button">Back to your Notes</button>
+    </a>
+    <div class="main-container">
+      <a href="./index.html">
+        <div class="note-page-header">Notly</div>
+      </a>
+      <input type="text" class="note-title" placeholder="Title your note..." />
+      <textarea
+        class="note-content"
+        placeholder="Write your thoughts here. Your ideas are safe among the stars..."
+      ></textarea>
+      <div class="controls">
+        <a href="./index.html">
+          <button class="btn btn-home">Home</button>
+        </a>
+        <button class="btn" id="clearButton">Clear</button>
+        <button class="btn btn-danger" id="deleteButton">Delete</button>
+        <button class="btn btn-primary">Save</button>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">All Notes</div>
+        <span class="note-count">0 notes</span>
+        <button class="close-sidebar">×</button>
+      </div>
+      <ul class="notes-list">
+        <!-- Notes will be dynamically added here -->
+      </ul>
+      <div class="create-new"><span>+</span> Create New Note</div>
+    </div>
+
+    <div class="sidebar-trigger"></div>
+    <div class="overlay"></div>
+
+    <script src="../js/newnote.js"></script>
+    <script src="../js/background.js"></script>
+  </body>
+</html>
