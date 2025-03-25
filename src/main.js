@@ -10,15 +10,17 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: path.join(__dirname, './favicon.png'),
+    icon: path.join(__dirname, 'favicon.ico'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      sandbox: false, // Needed for IPC to work
-      preload: path.join(__dirname, 'preload.js') // Use absolute path
+      sandbox: false, 
+      preload: path.join(__dirname, 'preload.js') 
     },
   });
 
+  mainWindow.maximize();
+  mainWindow.setMenuBarVisibility(false);
   mainWindow.loadFile(path.join(__dirname, 'pages/index.html'));
   // Comment out openDevTools in production
   // mainWindow.webContents.openDevTools();
