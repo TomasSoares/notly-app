@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path'); 
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+const fs = require('fs');
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -11,13 +12,41 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       nodeIntegration: false,
-      preload: path.join(__dirname, './preload.js'),
+      contextIsolation: true,
+      sandbox: false, // Needed for IPC to work
+      preload: path.join(__dirname, 'preload.js') // Use absolute path
     },
   });
 
   mainWindow.loadFile(path.join(__dirname, 'pages/index.html'));
-  mainWindow.webContents.openDevTools();
+  // Comment out openDevTools in production
+  // mainWindow.webContents.openDevTools();
 };
+
+// File operations
+const userDataPath = app.getPath('userData');
+const notesFilePath = path.join(userDataPath, 'notes.json');
+
+function saveNotesToFile(notes) {
+  fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2));
+}
+
+function loadNotesFromFile() {
+  if (fs.existsSync(notesFilePath)) {
+    return JSON.parse(fs.readFileSync(notesFilePath));
+  }
+  return [];
+}
+
+// Setup IPC handlers
+ipcMain.handle('load-notes', () => {
+  return loadNotesFromFile();
+});
+
+ipcMain.handle('save-notes', (event, notes) => {
+  saveNotesToFile(notes);
+  return true;
+});
 
 app.whenReady().then(() => {
   createWindow();

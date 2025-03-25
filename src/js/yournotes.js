@@ -1,7 +1,13 @@
-let notes = JSON.parse(localStorage.getItem("notly-notes")) || [];
+let notes = [];
 const notesList = document.getElementById("notes-list");
 const noteCount = document.getElementById("note-count");
 const createNewButton = document.getElementById("create-new");
+
+// Load notes from file
+async function loadNotes() {
+  notes = await window.notesAPI.loadNotes();
+  renderNotesList();
+}
 
 // Update note count
 function updateNoteCount() {
@@ -110,51 +116,31 @@ function setupBeforeUnloadHandler() {
 // Event listeners
 createNewButton.addEventListener("click", createNewNote);
 
-function deleteNote(noteId, event) {
-  // Stop the click event from propagating to the note item
+async function deleteNote(noteId, event) {
   event.stopPropagation();
-
-  // Find the index of the note to delete
   const noteIndex = notes.findIndex((note) => note.id === noteId);
 
   if (noteIndex !== -1) {
-    // Remove the note from the array
     notes.splice(noteIndex, 1);
-
-    // Update localStorage
-    localStorage.setItem("notly-notes", JSON.stringify(notes));
-
-    // Re-render the notes list
+    await window.notesAPI.saveNotes(notes);
     renderNotesList();
   }
 }
+
 // Initialize
-function initApp() {
-  // Always refresh notes from localStorage to ensure we have the latest data
-  notes = JSON.parse(localStorage.getItem("notly-notes")) || [];
+async function initApp() {
+  await loadNotes();
 
-  // Render the notes list with fresh data
-  renderNotesList();
-
-  // Check if we're returning from the note editor with updated notes
   if (sessionStorage.getItem("notesUpdated")) {
-    // Clear the flag
     sessionStorage.removeItem("notesUpdated");
-
-    // Force DOM update in case there's any caching issue
-    setTimeout(() => {
-      notes = JSON.parse(localStorage.getItem("notly-notes")) || [];
-      renderNotesList();
-    }, 50);
+    setTimeout(loadNotes, 50);
   }
 }
 
 // Add page visibility handler to refresh notes when coming back to this tab
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
-    // Refresh notes when the tab becomes visible again
-    notes = JSON.parse(localStorage.getItem("notly-notes")) || [];
-    renderNotesList();
+    loadNotes();
   }
 });
 

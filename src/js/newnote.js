@@ -1,6 +1,13 @@
-let notes = JSON.parse(localStorage.getItem("notly-notes")) || [];
+let notes = [];
 let currentNoteId = null;
 let formChanged = false;
+
+// Load notes at startup
+async function loadNotes() {
+  notes = await window.notesAPI.loadNotes();
+  renderNotesList();
+}
+
 // DOM elements
 const noteTitle = document.querySelector(".note-title");
 const noteContent = document.querySelector(".note-content");
@@ -72,7 +79,7 @@ function renderNotesList() {
 }
 
 // Save note
-function saveNote() {
+async function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.value.trim();
 
@@ -101,8 +108,7 @@ function saveNote() {
     }
   }
 
-  // Always save to localStorage, even if empty
-  localStorage.setItem("notly-notes", JSON.stringify(notes));
+  await window.notesAPI.saveNotes(notes);
 
   // Set the flag that notes have been updated
   sessionStorage.setItem("notesUpdated", "true");
@@ -269,7 +275,7 @@ function deleteCurrentNote() {
       notes.splice(noteIndex, 1);
 
       // Update localStorage
-      localStorage.setItem("notly-notes", JSON.stringify(notes));
+      window.notesAPI.saveNotes(notes);
 
       // Set flag to refresh notes list when returning to yournotes.html
       sessionStorage.setItem("notesUpdated", "true");
@@ -288,8 +294,8 @@ document
   .addEventListener("click", deleteCurrentNote);
 
 // Initialize app
-function initApp() {
-  renderNotesList();
+async function initApp() {
+  await loadNotes();
   setupAutoSave();
 
   // Check if there's a noteId in sessionStorage
