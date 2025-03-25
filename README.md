@@ -19,7 +19,7 @@ A minimalist note-taking application built with Electron. Write and save your th
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/yourusername/notly.git
+git clone https://github.com/TomasSoares/notly-app
 cd notly
 npm install
 ```
