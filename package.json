@@ -2,7 +2,7 @@
   "name": "notly-app",
   "productName": "notly-app",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A note taking app. (Write. Save. Remeber.) ",
   "main": "src/main.js", 
   "scripts": {
     "start": "electron-forge start",
