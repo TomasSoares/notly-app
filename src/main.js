@@ -10,7 +10,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: path.join(__dirname, 'favicon.ico'),
+    icon: path.join(__dirname, '../favicon.ico'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -19,7 +19,7 @@ const createWindow = () => {
     },
   });
 
-  mainWindow.maximize();
+  //mainWindow.maximize();
   mainWindow.setMenuBarVisibility(false);
   mainWindow.loadFile(path.join(__dirname, 'pages/index.html'));
   // Comment out openDevTools in production
