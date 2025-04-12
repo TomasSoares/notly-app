@@ -63,10 +63,6 @@ The built application will be available in the `out` directory.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Author
 
 Tomás Soares - [soarestomas2003@gmail.com](mailto:soarestomas2003@gmail.com)
